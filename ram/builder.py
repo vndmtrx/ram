@@ -25,14 +25,14 @@ class Assembler(object):
     
     def pretty_print(self):
         for i in range(0, len(self.program), 4):
-            line = '{:04X}'.format(i)
+            line = f'{i:04X}'
             byte_bin, byte_hex = ('','')
             for j in range(4):
                 if i+j < len(self.program):
                     byte_value = self.program[i+j]
-                    byte_bin += '{:08b} '.format(byte_value)
-                    byte_hex += '{:02X} '.format(byte_value)
-            print("| {} | {} | {} |".format(line, byte_bin.strip(), byte_hex.strip()))
+                    byte_bin += f'{byte_value:08b} '
+                    byte_hex += f'{byte_value:02X} '
+            print(f'| {line} | {byte_bin.strip()} | {byte_hex.strip()} |')
     
     def mov(self, rg2, rg1):
         return self.mnemonic("MOV", reg_codes[rg2], reg_codes[rg1])
