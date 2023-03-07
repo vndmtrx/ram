@@ -1,0 +1,63 @@
+# Assembly Mnemonics and OP Codes
+
+## Memory Model
+
+| Byte 1 | Byte 2 | Byte 3 | Byte 4 |
+|--------|--------|--------|--------|
+|01234567|01234567|01234567|01234567|
+|OP Code | Unused | Unused | Unused |
+|OP Code | Unused | Unused |  Addr  |
+|OP Code | Unused |  Addr  |  Addr  |
+
+| Byte 1 | Byte 2 | Byte 3  Byte 4 |
+|--------|--------|----------------|
+|01234567|01234567|0123456789abcdef|
+|OP Code | Unused |    Integer     |
+|OP Code |  Addr  |    Integer     |
+
+## Mnemonic Syntax: CMD <explicit> (implicit)
+
+### Basic mnemonics and definitions
+
+; - Line comment
+
+RCV <SRC> (TMP) - receive data from designated pipeline to TMP register
+SND <DST> (TMP) - send data from TMP register to designated pipeline
+
+MOV <DST> <SRC> - move data from SRC register or pipeline to the DST register or pipeline
+WRT <RG1> <INT> - write a INT value on the register
+
+CMP <RG2> <RG1> - compare two register values, following those rules:
+                - - RG1 < RG2: ZF=0, CF=1
+                - - RG1 > RG2: ZF=0, CF=0
+                - - RG1 = RG2: ZF=1, CF=0
+
+## Jump mnemonics and definitions
+
+@LABEL - marks the jump point for commands (converted to a PTR address in the build phase)
+
+JP <@LABEL>  - jumps unconditionally to the PTR address
+JV <INT>     - jumps to the instruction point denoted by the INT value
+JR (TMP)     - jumps to the instruction point denoted by the TMP value
+
+JE <@LABEL> - jumps if ZF=1
+JN <@LABEL> - jumps if ZF=0
+JL <@LABEL> - jumps if ZF=0 and CF=1
+JG <@LABEL> - jumps if ZF=0 and CF=0
+
+### Arithmetic mnemonics
+
+ADD (TMP) (ACC) - sums the TMP value with ACC, carry is on TMP
+SUB (TMP) (ACC) - substracts the TMP value with ACC, carry is on TMP
+
+INC (CNT)       - increment CNT register
+DEC (INC)       - decrement CNT register
+
+SAV <RG1> (STO) - replace STO value with ACC value
+RTR <RG1> (STO) - replace ACC value with STO value
+SWP <RG2> <RG1> - swap values stored between two registers
+
+### Miscelaneous mnemonics
+
+NOP             - burns a processing cycle
+HLT             - halts the execution until the flag changes (sets the HALT flag)
