@@ -39,3 +39,48 @@ class Assembler(object):
     
     def wrt(self, rg1, value):
         return self.mnemonic("WRT", reg_codes[rg1], value)
+    
+    def cmp(self, rg2, rg1):
+        return self.mnemonic("CMP", reg_codes[rg2], reg_codes[rg1])
+    
+    def jp(self, value):
+        return self.mnemonic("JP", value)
+    
+    def je(self, value):
+        return self.mnemonic("JE", value)
+    
+    def jn(self, value):
+        return self.mnemonic("JN", value)
+    
+    def jl(self, value):
+        return self.mnemonic("JL", value)
+    
+    def jg(self, value):
+        return self.mnemonic("JG", value)
+    
+    def add(self, rg1):
+        return self.mnemonic("ADD", reg_codes[rg1])
+    
+    def sub(self, rg1):
+        return self.mnemonic("SUB", reg_codes[rg1])
+    
+    def inc(self):
+        return self.mnemonic("INC")
+    
+    def dec(self):
+        return self.mnemonic("DEC")
+    
+    def sav(self, rg1):
+        return self.mnemonic("SAV", reg_codes[rg1])
+    
+    def rtr(self, rg1):
+        return self.mnemonic("RTR", reg_codes[rg1])
+    
+    def swp(self, rg2, rg1):
+        return self.mnemonic("SWP", reg_codes[rg2], reg_codes[rg1])
+    
+    def nop(self):
+        return self.mnemonic("NOP")
+    
+    def hlt(self):
+        return self.mnemonic("HLT")
