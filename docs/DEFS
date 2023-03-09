@@ -36,25 +36,22 @@ CMP <RG2> <RG1> - compare two register values, following those rules:
 
 @LABEL - marks the jump point for commands (converted to a PTR address in the build phase)
 
-JP <@LABEL>  - jumps unconditionally to the PTR address
-JV <INT>     - jumps to the instruction point denoted by the INT value
-JR (TMP)     - jumps to the instruction point denoted by the TMP value
-
-JE <@LABEL> - jumps if ZF=1
-JN <@LABEL> - jumps if ZF=0
-JL <@LABEL> - jumps if ZF=0 and CF=1
-JG <@LABEL> - jumps if ZF=0 and CF=0
+JP <@LABEL/INT> - jumps unconditionally to the PTR address or INT value
+JE <@LABEL/INT> - jumps if ZF=1
+JN <@LABEL/INT> - jumps if ZF=0
+JL <@LABEL/INT> - jumps if ZF=0 and CF=1
+JG <@LABEL/INT> - jumps if ZF=0 and CF=0
 
 ### Arithmetic mnemonics
 
-ADD (TMP) (ACC) - sums the TMP value with ACC, carry is on TMP
-SUB (TMP) (ACC) - substracts the TMP value with ACC, carry is on TMP
+ADD <RG1> (ACC) - sums the value on the RG1 register with ACC, carry is on TMP
+SUB <RG1> (ACC) - substracts the value on the RG1 register with ACC, carry is on TMP
 
 INC (CNT)       - increment CNT register
-DEC (INC)       - decrement CNT register
+DEC (CNT)       - decrement CNT register
 
-SAV <RG1> (STO) - replace STO value with ACC value
-RTR <RG1> (STO) - replace ACC value with STO value
+SAV <RG1> (STO) - replace STO value with RG1 register value
+RTR <RG1> (STO) - replace RG1 register value with STO value
 SWP <RG2> <RG1> - swap values stored between two registers
 
 ### Miscelaneous mnemonics

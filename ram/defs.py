@@ -5,26 +5,31 @@
 
 from struct import pack
 
+func_op           = lambda op: pack('B3x', op)
+func_op_addr      = lambda op, rg1: pack('B2xB', op, rg1)
+func_op_addr_addr = lambda op, rg2, rg1: pack('Bx2B', op, rg2, rg1)
+
+func_op_val       = lambda op, val: pack('BxH', op, val)
+func_op_addr_val  = lambda op, rg1, val: pack('2BH', op, rg1, val)
+
 mnemonics = {
-    'MOV': lambda op, rg2, rg1: pack('Bx2B', op, rg2, rg1),
-    'WRT': lambda op, reg, val: pack('2BH', op, reg, val),
-    'CMP': lambda op, rg2, rg1: pack('Bx2B', op, rg2, rg1),
-    'JP' : lambda op, reg, val: pack('2BH', op, reg, val),
-    'JV' : lambda op, val: pack('BxH', op, val),
-    'JR' : lambda op: pack('B3x', op),
-    'JE' : lambda op, val: pack('BxH', op, val),
-    'JN' : lambda op, val: pack('BxH', op, val),
-    'JL' : lambda op, val: pack('BxH', op, val),
-    'JG' : lambda op, val: pack('BxH', op, val),
-    'ADD': lambda op: pack('B3x', op),
-    'SUB': lambda op: pack('B3x', op),
-    'INC': lambda op: pack('B3x', op),
-    'DEC': lambda op: pack('B3x', op),
-    'SAV': lambda op, reg: pack('B2xB', op, reg),
-    'RTR': lambda op, reg: pack('B2xB', op, reg),
-    'SWP': lambda op, rg2, rg1: pack('Bx2B', op, rg2, rg1),
-    'NOP': lambda op: pack('B3x', op),
-    'HLT': lambda op: pack('B3x', op)
+    'MOV': func_op_addr_addr,
+    'WRT': func_op_addr_val,
+    'CMP': func_op_addr_addr,
+    'JP' : func_op_val,
+    'JE' : func_op_val,
+    'JN' : func_op_val,
+    'JL' : func_op_val,
+    'JG' : func_op_val,
+    'ADD': func_op_addr,
+    'SUB': func_op_addr,
+    'INC': func_op,
+    'DEC': func_op,
+    'SAV': func_op_addr,
+    'RTR': func_op_addr,
+    'SWP': func_op_addr_addr,
+    'NOP': func_op,
+    'HLT': func_op
 }
 
 registers = (
