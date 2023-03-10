@@ -36,11 +36,11 @@ CMP <RG2> <RG1> - compare two register values, following those rules:
 
 @LABEL - marks the jump point for commands (converted to a PTR address in the build phase)
 
-JP <@LABEL/INT> - jumps unconditionally to the PTR address or INT value
-JE <@LABEL/INT> - jumps if ZF=1
-JN <@LABEL/INT> - jumps if ZF=0
-JL <@LABEL/INT> - jumps if ZF=0 and CF=1
-JG <@LABEL/INT> - jumps if ZF=0 and CF=0
+JP <@LABEL> - jumps unconditionally to the LABEL address
+JE <@LABEL> - jumps if ZF=1
+JN <@LABEL> - jumps if ZF=0
+JL <@LABEL> - jumps if ZF=0 and CF=1
+JG <@LABEL> - jumps if ZF=0 and CF=0
 
 ### Arithmetic mnemonics
 
