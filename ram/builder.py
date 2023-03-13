@@ -4,6 +4,7 @@
 ## Source code for the Assembly Machine (Asm)
 
 from inspect import signature
+from struct import pack
 
 from ram.defs import mnemonics, registers, op_codes, reg_codes
 
@@ -15,13 +16,8 @@ class Assembler(object):
         self.program.extend(instruction)
     
     def mnemonic(self, opcode, *args):
-        op_lambda = mnemonics[opcode]
-        op_parameters = signature(op_lambda).parameters
-        if (len(args)+1) != len(op_parameters):
-            raise ValueError("Mnemonic signature mismatch")
-        else:
-            ret = op_lambda(op_codes[opcode], *args)
-            self.collect(ret)
+        ret = pack(mnemonics[opcode], op_codes[opcode], *args)
+        self.collect(ret)
     
     def pretty_print(self):
         for i in range(0, len(self.program), 4):

@@ -5,31 +5,24 @@
 
 from struct import pack
 
-func_op           = lambda op: pack('B3x', op)
-func_op_addr      = lambda op, rg1: pack('B2xB', op, rg1)
-func_op_addr_addr = lambda op, rg2, rg1: pack('Bx2B', op, rg2, rg1)
-
-func_op_val       = lambda op, val: pack('BxH', op, val)
-func_op_addr_val  = lambda op, rg1, val: pack('2BH', op, rg1, val)
-
 mnemonics = {
-    'MOV': func_op_addr_addr,
-    'WRT': func_op_addr_val,
-    'CMP': func_op_addr_addr,
-    'JP' : func_op_val,
-    'JE' : func_op_val,
-    'JN' : func_op_val,
-    'JL' : func_op_val,
-    'JG' : func_op_val,
-    'ADD': func_op_addr,
-    'SUB': func_op_addr,
-    'INC': func_op,
-    'DEC': func_op,
-    'SAV': func_op_addr,
-    'RTR': func_op_addr,
-    'SWP': func_op_addr_addr,
-    'NOP': func_op,
-    'HLT': func_op
+    'MOV': 'Bx2B', # OP REG2 REG1
+    'WRT': '2BH' , # OP REG1 INT
+    'CMP': 'Bx2B', # OP REG2 REG1
+    'JP' : 'BxH' , # OP INT
+    'JE' : 'BxH' , # OP INT
+    'JN' : 'BxH' , # OP INT
+    'JL' : 'BxH' , # OP INT
+    'JG' : 'BxH' , # OP INT
+    'ADD': 'Bx2B', # OP REG2 REG1
+    'SUB': 'Bx2B', # OP REG2 REG1
+    'INC': 'B3x' , # OP
+    'DEC': 'B3x' , # OP
+    'SAV': 'Bx2B', # OP REG2 REG1
+    'RTR': 'Bx2B', # OP REG2 REG1
+    'SWP': 'Bx2B', # OP REG2 REG1
+    'NOP': 'B3x' , # OP
+    'HLT': 'B3x' , # OP
 }
 
 registers = (
