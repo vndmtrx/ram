@@ -6,7 +6,7 @@
 from inspect import signature
 from struct import pack
 
-from ram.defs import mnemonics, registers, op_codes, reg_codes
+from ram.defs import mnemonic_defs, registers, opcodes, reg_codes
 
 class Assembler(object):
     def __init__(self):
@@ -15,9 +15,12 @@ class Assembler(object):
     def collect(self, instruction):
         self.program.extend(instruction)
     
-    def mnemonic(self, opcode, *args):
-        ret = pack(mnemonics[opcode], op_codes[opcode], *args)
+    def mnemonic(self, op, *args):
+        ret = pack(mnemonic_defs[op], opcodes[op], *args)
         self.collect(ret)
+    
+     def parse_program(self, string):
+        pass
     
     def pretty_print(self):
         for i in range(0, len(self.program), 4):
