@@ -11,6 +11,7 @@ from ram.defs import mnemonic_defs, registers, opcodes, reg_codes
 class Assembler(object):
     def __init__(self):
         self.program = bytearray()
+        self.labels = {}
     
     def collect(self, instruction):
         self.program.extend(instruction)
@@ -19,7 +20,7 @@ class Assembler(object):
         ret = pack(mnemonic_defs[op], opcodes[op], *args)
         self.collect(ret)
     
-     def parse_program(self, string):
+    def parse_program(self, string):
         pass
     
     def pretty_print(self):
@@ -33,6 +34,10 @@ class Assembler(object):
                     byte_hex += f'{byte_value:02X} '
             print(f'| {line} | {byte_bin.strip()} | {byte_hex.strip()} |')
     
+    def label(self, value):
+        if value not in self.labels:
+            self.labels[value] = len(self.program)
+    
     def mov(self, rg2, rg1):
         return self.mnemonic("MOV", reg_codes[rg2], reg_codes[rg1])
     
@@ -43,19 +48,19 @@ class Assembler(object):
         return self.mnemonic("CMP", reg_codes[rg2], reg_codes[rg1])
     
     def jp(self, value):
-        return self.mnemonic("JP", value)
+        return self.mnemonic("JP", self.labels[value])
     
     def je(self, value):
-        return self.mnemonic("JE", value)
+        return self.mnemonic("JE", self.labels[value])
     
     def jn(self, value):
-        return self.mnemonic("JN", value)
+        return self.mnemonic("JN", self.labels[value])
     
     def jl(self, value):
-        return self.mnemonic("JL", value)
+        return self.mnemonic("JL", self.labels[value])
     
     def jg(self, value):
-        return self.mnemonic("JG", value)
+        return self.mnemonic("JG", self.labels[value])
     
     def add(self, rg1):
         return self.mnemonic("ADD", reg_codes[rg1])
